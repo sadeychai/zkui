@@ -32,8 +32,10 @@ import org.eclipse.jetty.server.SecureRequestCustomizer;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.server.ServerConnector;
 import org.eclipse.jetty.server.SslConnectionFactory;
+import org.eclipse.jetty.server.handler.ContextHandler;
 import org.eclipse.jetty.server.handler.HandlerList;
 import org.eclipse.jetty.server.handler.ResourceHandler;
+import org.eclipse.jetty.servlet.DefaultServlet;
 import org.eclipse.jetty.util.resource.Resource;
 import org.eclipse.jetty.util.ssl.SslContextFactory;
 import org.eclipse.jetty.webapp.Configuration.ClassList;
@@ -49,9 +51,9 @@ public class Main {
 
         logger.debug("Starting ZKUI!");
         Properties globalProps = new Properties();
-        File f = new File("config.cfg");
+        File f = new File("D:\\workspace\\git\\self\\zkui\\config.cfg");
         if (f.exists()) {
-            globalProps.load(new FileInputStream("config.cfg"));
+            globalProps.load(new FileInputStream("D:\\workspace\\git\\self\\zkui\\config.cfg"));
         } else {
             System.out.println("Please create config.cfg properties file and then execute the program!");
             System.exit(1);
@@ -64,7 +66,7 @@ public class Main {
         Server server = new Server();
 
         WebAppContext servletContextHandler = new WebAppContext();
-        servletContextHandler.setContextPath("/");
+        servletContextHandler.setContextPath("/zk");
         servletContextHandler.setResourceBase("src/main/resources/" + webFolder);
         ClassList clist = ClassList.setServerDefault(server);
         clist.addBefore(JettyWebXmlConfiguration.class.getName(), AnnotationConfiguration.class.getName());

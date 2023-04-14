@@ -145,7 +145,7 @@ public class Import extends HttpServlet {
                 }
             }
             request.getSession().setAttribute("flashMsg", "Import Completed!");
-            response.sendRedirect("/home");
+            response.sendRedirect("/zk/home");
         } catch (FileUploadException | IOException | InterruptedException | KeeperException ex) {
             logger.error(Arrays.toString(ex.getStackTrace()));
             ServletUtil.INSTANCE.renderError(request, response, ex.getMessage());
