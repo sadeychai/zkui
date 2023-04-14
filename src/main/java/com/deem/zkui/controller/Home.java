@@ -24,6 +24,7 @@ import com.deem.zkui.vo.LeafBean;
 import com.deem.zkui.vo.ZKNode;
 import freemarker.template.TemplateException;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -58,8 +59,8 @@ public class Home extends HttpServlet {
             String zkPath = request.getParameter("zkPath");
             String navigate = request.getParameter("navigate");
             ZooKeeper zk = ServletUtil.INSTANCE.getZookeeper(request, response, zkServerLst[0], globalProps);
-            List<String> nodeLst;
-            List<LeafBean> leafLst;
+            List<String> nodeLst = new ArrayList<>();
+            List<LeafBean> leafLst = new ArrayList<>();
             String currentPath, parentPath, displayPath;
             String authRole = (String) request.getSession().getAttribute("authRole");
             if (authRole == null) {
@@ -69,16 +70,20 @@ public class Home extends HttpServlet {
             if (zkPath == null || zkPath.equals("/")) {
                 templateParam.put("zkpath", "/");
                 ZKNode zkNode = ZooKeeperUtil.INSTANCE.listNodeEntries(zk, "/", authRole);
-                nodeLst = zkNode.getNodeLst();
-                leafLst = zkNode.getLeafBeanLSt();
+                if(zkNode!=null){
+                    nodeLst = zkNode.getNodeLst();
+                    leafLst = zkNode.getLeafBeanLSt();
+                }
                 currentPath = "/";
                 displayPath = "/";
                 parentPath = "/";
             } else {
                 templateParam.put("zkPath", zkPath);
                 ZKNode zkNode = ZooKeeperUtil.INSTANCE.listNodeEntries(zk, zkPath, authRole);
-                nodeLst = zkNode.getNodeLst();
-                leafLst = zkNode.getLeafBeanLSt();
+                if(zkNode!=null){
+                    nodeLst = zkNode.getNodeLst();
+                    leafLst = zkNode.getLeafBeanLSt();
+                }
                 currentPath = zkPath + "/";
                 displayPath = zkPath;
                 parentPath = zkPath.substring(0, zkPath.lastIndexOf("/"));
