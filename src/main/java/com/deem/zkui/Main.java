@@ -51,9 +51,9 @@ public class Main {
 
         logger.debug("Starting ZKUI!");
         Properties globalProps = new Properties();
-        File f = new File("D:\\workspace\\git\\self\\zkui\\config.cfg");
+        File f = new File("config.cfg");
         if (f.exists()) {
-            globalProps.load(new FileInputStream("D:\\workspace\\git\\self\\zkui\\config.cfg"));
+            globalProps.load(new FileInputStream("config.cfg"));
         } else {
             System.out.println("Please create config.cfg properties file and then execute the program!");
             System.exit(1);
